@@ -1,0 +1,62 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} product details {% endblock title %}
+
+
+
+{% block content %}
+<section class="pricing-section spad">
+
+
+
+<div class="container" >
+   <h1 style="color: rgb(183, 62, 18); text-align: center;"> {{Product}}</h1><br>
+    <div class="row flex justify-content-between" >
+         <div class="img2 col-lg-5 mt-5">
+            <img src="{{Product.product_image.url}}" alt="" style="border-radius: 15px;" width="500px" height="350px">
+            
+         </div>
+         <div class="productdetils col-lg-5" style="color: white;"><br><br><br>
+
+            <!-- <h1 style="font-family:Georgia; font-size: 50px; color: coral;">{{Product.title}}</h1> -->
+                 <h5 style="color: rgb(30, 160, 28);">Discount Price.{{Product.discounted_price}}/-</h5>
+                 <small class="text-decoration-line-through text-muted fs-5"> 
+                 <del style="color: rgb(255, 255, 255);"> MRP.{{Product.selling_price}}/-</del> </small>
+                 <br><br><h4  style="color: rgb(125, 28, 28);">Product Features</h4><br>
+                 <ul class="fs-5" style="font-family: Rajdhani;">
+                    <li>{{Product.discription}}</li>
+                    <li>{{Product.composition}}</li>
+                    <li>{{Product.prodapp}}</li><br><br><br>
+                 </ul>
+
+                 <div  class="buttons row flex"n style="font-family: Rajdhani;">
+
+                               <form action="/add-to-cart" class="d-inline">
+                                 <input type="hidden" name="prod_id" value={{Product.id}}>
+                                      <button type="submit" class="btn btn-primary shadow px-5 py-2">Add to Cart</button>
+                               </form>&nbsp&nbsp
+                               
+                  {% comment %} <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Buy Now</a>&nbsp&nbsp {% endcomment %}
+               
+                  {% if wishlist %}
+                  <a pid={{ Product.id }} class="minus-wishlist btn btn-danger shadow px-5 py-2 ms-4" href=""><i class="fa-solid fa-heart fa-xl" style="color: #ffffff;"></i></a>
+                  {% else %}
+                  <a pid={{ Product.id }} class="plus-wishlist btn btn-success shadow px-5 py-2 ms-4" href=""><i class="fa-solid fa-heart-circle-plus fa-xl" style="color: #ffffff;"></i></a>
+                  {% endif %}
+                  
+               </div><br>
+               
+
+
+         </div>
+
+    </div>
+
+
+
+</div>
+
+</section>
+{% endblock content %}
+

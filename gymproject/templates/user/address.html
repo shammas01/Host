@@ -1,0 +1,53 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} Address {% endblock title %}
+
+
+{% block content %}
+
+<section class="pricing-section spad">
+
+<div class="container my-5">
+    <div class="row">
+    
+
+     <div class="col-sm-3 ">
+        <ul class="row">
+            <li class="d-grid"><a href="{%url 'profile'%}" class="btn " style="background-color: rgb(239, 231, 231);"> Profile </a></li>&nbsp
+            
+            <li class="d-grid"><a href="{%url 'address'%}" class="btn btn-primary" > Address </a></li>
+        </ul>
+     </div>
+
+      <div class="col-sm-8 offset-sm-1">
+        <div style="text-align: center;"> 
+            <h3 style="color:white;">Welcome <span class="text-capitalize" style="color: coral;">{{request.user}}</span></h3>
+        </div><br><br>
+        <div class="row" >
+            {% for ad in add %}
+            <div class="col-sm-6">
+                <div class="card m-2">
+                    <div class="card-body" >
+                        <h3 style="color: coral;">Address {{forloop.counter}}</h3><br>
+                        <p style="color: black;">Name : {{ad.name}}</p>
+                        <p style="color: black;">Locality : {{ad.locality}}</p>
+                        <p style="color: black;">Mobile : {{ad.mobile}}</p>
+                        <p style="color: black;">City : {{ad.city}}</p>
+                        <p style="color: black;">State : {{ad.state}}</p>
+                        <p style="color: black;">Name : {{ad.zipcode}}</p>
+                        <p class="text-center"><a href="{% url 'updateaddress' pk=ad.id %}" type="button" class="btn btn-success">Update</a></p> 
+                        <p class="text-center"></p>
+                    </div>
+
+                </div>
+
+            </div>
+            
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+
+</section>
+{%endblock content %}

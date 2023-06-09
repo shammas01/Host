@@ -1,0 +1,17 @@
+ {% autoescape off %} 
+Hi {{ user.username }},
+ please click below link to confirm your registration
+ 
+http://{{ domain }}{% url 'activate'  uidb64=uid token=token %}
+
+  It it's not you ,please ignore this email 
+{% endautoescape %} 
+
+{% comment %} {% autoescape off %} 
+Hi {{ user.username }},
+ please click the button below to confirm your registration:
+<br><br>
+<a href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}" style="background-color: #007bff; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Activate Your Account</a>
+<br><br>
+If it's not you, please ignore this email.
+{% endautoescape %} {% endcomment %}

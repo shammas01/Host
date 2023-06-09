@@ -1,0 +1,45 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} search {% endblock title %}
+
+
+{% block content %}
+
+<section class="pricing-section spad">
+    <div>
+    <h3 style="color: coral; text-align: center;">Products</h3>
+</div>
+
+
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                {% for prod in Product %}
+                <div class="col-sm-4 text-center mb-4 hover-shadow">
+                    <a href="{% url 'productdetails' prod.id %}" class="btn">
+                        <div>
+                            <img src="{{ prod.product_image.url}}" width="250px" height="200px" alt="" style="border-radius: 15px;">
+                            <div class="fw-bold" style="color: coral;"> {{prod.title}}</div>
+                            <div class="few-bold text" style="color: rgb(255, 255, 255);">Rs: {{prod.discounted_price}}/-</div>
+                            <del class="fw-light text-danger">{{prod.selling_price}}</del>                         
+                        </div>
+                    </a>
+
+                </div>
+                    
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+{% endblock content %}

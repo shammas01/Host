@@ -1,0 +1,80 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} checkout {% endblock title %}
+
+
+
+{% block content %}
+
+
+
+
+<section class="pricing-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    
+                    <h2>Your plan details</h2>
+                </div>
+            </div>
+        </div>
+        
+        {% if plan %}
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-8">
+                    <div class="ps-item">
+                        <h3>{{ plan.name }}</h3>
+                        <div class="pi-price">
+                            <h2>Rs: {{ plan.price }}</h2>
+                            <span>SINGLE CLASS</span>
+                        </div>
+                        <ul>
+                            <li>Duration {{plan.duration}} months</li>
+                            <li>Free riding</li>
+                            <li>Unlimited equipment</li>
+                            <li>Personal trainer</li>
+                            <li>Weight losing classes</li>
+                            <li>Month to month</li>
+                            <li>No time restriction</li>
+                            <li>Expiration Date: {{ plan.end_date|date:'F d, Y' }}</li>
+                        </ul>
+                       
+                        <form method="post" action="{% url 'cancel_plan' plan_id=cancel_plan_id %}" onsubmit="return confirm('Are you sure you want to cancel the plan?');">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-center">
+                                <button class="primary-btn pricing-btn" type="submit" style="border-radius: 25px;">Cancel Plan</button>
+                            </div>
+                        </form>
+                        
+                        {% comment %} <a href="#" class="thumb-icon"><i class="fa fa-picture-o"></i></a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-4">
+                    <div class="text-center">
+                        <p class="primary-btn pricing-btn" style="background-color: red;">You don't have a current plan.</p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="primary-btn pricing-btn mr-2 hover-effect" href="{% url 'plan'%}" style="border-radius: 30px; background-color: rgb(92, 194, 92);">Choos your Plan</a>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .hover-effect:hover {
+                    background-color: rgb(22, 117, 21) !important;
+                }
+                </style>
+            
+        {% endif %}
+    </div>
+</section>
+
+
+
+
+{% endblock content %}

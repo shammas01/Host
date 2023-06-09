@@ -1,0 +1,46 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} profile {% endblock title %}
+
+
+{% block content %}
+
+
+<section class="pricing-section spad">
+
+<div class="container my-5" style="color: coral;">
+    <div class="row">
+         
+    </div>
+    <div class="col-sm-8 offset-sm-1">
+        <form action="" method="post">
+            <div style="text-align: center;">
+                <h3 style="color:white;">Welcome <span class="text-capitalize" style="color: coral;">{{request.user|capfirst}}</span></h3><br>
+            </div>
+            
+            {% csrf_token %}
+
+            {% for fm in form %}
+            {{fm.label_tag}} {{fm}} <small class="text-danger">
+            {{fm.errors|striptags}}
+            </small> <br>
+            {% endfor %}
+
+            <div class="col-12 mt-3">
+               <button type="submit" class="btn btn-primary">Update</button>&nbsp&nbsp
+               <a href="{%url 'address'%} " type="button" class="btn btn-danger">Back</a>
+            </div>
+
+                 {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors  %}
+                        <p class="alert alert-danger my-3">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+        </form>
+
+    </div>
+</div>
+
+</section>
+{% endblock content %}

@@ -1,0 +1,59 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} category {% endblock title %}
+
+
+
+{% block content %}
+<section class="pricing-section spad">
+
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="list-group">
+         {% for val in title  %}
+             
+             <a href="{% url 'categorytitle' val.title %}" class="list-group-item list-group-item-action" aria-current="true">{{val.title}}
+            </a>
+
+         {% endfor %}
+ 
+                    </div>
+            
+                </div>
+               
+
+            <div class="col-sm-9">
+
+                <div class="row">
+
+                    {% for prod in Product %}
+                       
+                    <div class="col-text-center-mb-4">
+                        <a href="{% url 'productdetails' prod.id  %}" class="btn">
+                        <div>
+                            <img src="{{ prod.product_image.url}}" width="250px" height="200px" alt="" style="border-radius: 15px;">
+                            <div class="fw-bold" style="color: coral;"> {{prod.title}}</div>
+                            <div class="few-bold text" style="color: rgb(255, 255, 255);">Rs: {{prod.discounted_price}}/-</div>
+                            <del class="fw-light text-danger">{{prod.selling_price}}</del>
+                           
+                        </div>
+                        </a>
+                    </div>
+
+                    
+                    {% endfor %}
+            
+                </div>
+
+            </div>
+
+    </div>
+
+
+</div>
+</section> 
+
+{% endblock content %}

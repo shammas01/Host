@@ -1,0 +1,71 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} Our plan {% endblock title %}
+
+
+
+{% block content %}
+
+    
+
+
+
+
+
+<!-- Pricing Section Begin -->
+<section class="pricing-section spad">
+    <div class="container">
+        <div class="d-flex justify-content-center" >
+
+        <a class="primary-btn pricing-btn " type="submit" style="background-color: rgb(92, 194, 92); border-radius: 25px;" href="{% url 'currentplan' %}">Your current plan</a> <br>
+       
+    </div><br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Our Plan</span>
+                    <h2>Choose your pricing plan</h2>
+                </div>
+            </div>
+        </div>
+        <form method="post" id="myform">
+            {% csrf_token %}
+        <div class="row justify-content-center">
+        {% for plan in plans %}
+    <div class="col-lg-4 col-md-8">
+        <div class="ps-item">
+            <h3>{{ plan.name }}</h3>
+            <h3>{{ plan.duration }} Month Duration</h3>
+            <div class="pi-price">
+                <h2>Rs: {{ plan.price }}</h2>
+                <span>SINGLE CLASS</span>
+            </div>
+            <ul>
+                
+                <li>Free riding</li>
+                <li>Unlimited equipments</li>
+                <li>Personal trainer</li>
+                <li>Weight losing classes</li>
+                <li>Month to mouth</li>
+                <li>No time restriction</li>
+            </ul>
+            <input type="hidden" name="plan_id" value="{{ plan.id }}">
+            <a class="primary-btn pricing-btn" id="rzp-button1" type="submit" href="{% url 'plan_detail' plan_id=plan.id %}">Enroll now</a>
+            <a href="#" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+        </div>
+    </div>
+{% endfor %}
+        </div>
+    </form>
+    </div>
+</section>
+<!-- Pricing Section End -->
+
+
+
+
+
+
+{% endblock content %}

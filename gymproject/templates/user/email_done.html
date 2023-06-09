@@ -1,0 +1,19 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} Email done {% endblock title %}
+{% block head %}{% endblock head %}
+
+
+{% block content %}
+<section class="pricing-section spad">
+
+<div class="shadow p-5" style="color:white">
+
+    <h1>Registration Complete</h1><br>
+    <p style="color: green;">Thank you for registering. Your account has been created successfully.</p>
+    <p style="color: green;">You can now login to access your account.</p>
+    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+</div>
+</section>
+{% endblock content %}

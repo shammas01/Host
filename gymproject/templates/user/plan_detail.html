@@ -1,0 +1,86 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} plan details {% endblock title %}
+
+
+
+{% block content %}
+
+
+
+
+<section class="pricing-section spad">
+<div class="row justify-content-center">
+<div class="col-lg-4 col-md-8">
+    <div class="ps-item">
+        <h3>{{ plan.name }}</h3>
+        <div class="pi-price">
+            <h2>Rs: {{ plan.price }}</h2>
+            <span>SINGLE CLASS</span>
+        </div>
+        <ul>
+            <li>{{ plan.duration }} month training</li>
+            <li>Free riding</li>
+            <li>Unlimited equipments</li>
+            <li>Personal trainer</li>
+            <li>Weight losing classes</li>
+            <li>Month to mouth</li>
+            <li>No time restriction</li>
+        </ul>
+        <form method="post" id="myform">
+            {% csrf_token %}
+
+        <input type="hidden" name="plan_id" value="{{ plan.id }}">
+        <input type="hidden" name="amount" value="{{ plan.price }}">
+        {% if existing_plan %}
+        <p class="primary-btn pricing-btn" style="background-color: rgb(11, 219, 219);">You already have a plan</p>
+        <a class="primary-btn pricing-btn" type="submit"  href="{% url 'currentplan' %}">Your current plan</a>
+        {% else %}
+        <a class="primary-btn pricing-btn" id="rzp-button1" type="submit">Pay now</a>
+        {% endif %}
+       
+        
+        </form>       
+    </div>
+</div>
+</div>
+</section>
+
+
+
+
+
+<script>
+    var options = {
+        "key": "{{razorpay_key}}",
+        "amount": "{{ razoramount }}",
+        "currency": "INR",
+        "name": "GYM Products",
+        "description": "Purchase Product",
+        "order_id": "{{ order_id }}",
+        "handler": function (response) {
+            var form = document.getElementById("myform")
+            form.action = "{% url 'planpaymentdone' %}";
+            form.submit();
+            window.location.href = `http://localhost:8000/planpaymentdone?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&cust_id=${form.elements["custid"].value}`
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+        alert(response.error.description);
+    });
+
+    document.getElementById('rzp-button1').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+
+
+</script>
+
+{% endblock content %}

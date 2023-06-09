@@ -1,0 +1,72 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} profile {% endblock title %}
+
+
+{% block content %}
+
+
+<section class="pricing-section spad">
+
+
+<div class="container my-5">
+    <div class="row">
+        
+        
+        
+
+        
+     <div class="col-sm-2 ">
+        
+        <ul class="row">
+            &nbsp&nbsp<li class="d-grid"><a href="#" class="btn btn-primary"> Profile </a></li>&nbsp&nbsp
+           
+            <li class="d-grid"><a href="{%url 'address'%}" class="btn" style="background-color: rgb(239, 231, 231);"> Address </a></li>
+        </ul>
+     </div>
+     
+
+     <div class="col-sm-8 offset-sm-1">
+        <div style="text-align: center;"> 
+            <h3 style="color:white;">Welcome <span class="text-capitalize" style="color: coral;">{{request.user|capfirst}}</span></h3>
+        </div><br><br>
+        <br>
+        <form action="" method="post" style="color: coral;">
+            {% csrf_token %}
+            {% for fm in form %}
+                {{fm.label_tag}} {{fm}} <small class="text-danger">
+                {{fm.errors|striptags}}
+                </small> <br>
+                    
+            {% endfor %}
+            
+            <div class="col-12 mt-3">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <br><br>
+            </div>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors  %}
+                    <p class="alert alert-danger my-3">{{error}}</p>
+                {% endfor %}
+            {% endif %}
+
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-{{msg.tags}}" role="alert">
+                     {{msg}}
+                    </div>
+                {% endfor %}       
+            {% endif %}
+        </form>
+
+    </div>
+
+</div>
+
+</div>
+</section>
+
+{% endblock content%}
+
+

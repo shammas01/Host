@@ -1,0 +1,110 @@
+{% extends 'user/index.html' %}
+{% load static %}
+
+{% block title %} checkout {% endblock title %}
+
+
+
+{% block content %}
+<section class="pricing-section spad">
+    <div class="container">
+        {% if messages %}
+           {% for msg in messages %}
+           <div class="alert alert-danger" role="alert">
+            {{msg}}
+           </div>
+           {% endfor %}
+        {% endif %}
+        <div class="row mt-5">
+            <div class="col-sm-6">
+                <h4 style="color: coral;">Order Summary</h4>
+                <hr>
+                {% for item in cart_items %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5>Product: {{item.product.title}}</h5>
+                        <p>Quantity: {{item.quantity}}</p>
+                        <p class="fw-bold">Price: {{item.product.discounted_price}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                <p class="fw-bold">Total Cost + Rs. 40 = {{totalamount}}</p>
+                <small style="color: green;">Terms and Conditions:</small>
+            </div>
+            <div class="col-sm-4 offset-sm-1">
+                <h4 style="color: coral;">Select Shipping Address</h4>
+                <a href="{% url 'profile' %}" type="button" class="btn btn-primary mt-3 px-5 fw-bold">Add address</a>
+                <hr>
+                <form method="post" id="myform">
+                    {% csrf_token %}
+                    {% for ad in add %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{ad.name}}</h5>
+                            <p>Mobile: {{ad.mobile}}</p>
+                            <p>{{ad.locality}} {{ad.city}} {{ad.state}} - {{ad.zipcode}}</p>
+                        </div>
+                    </div>
+                    <div class="form-check mt-2 mb-5">
+                        <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}">
+                        <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}" style="color: white;">
+                            Address: {{forloop.counter}}
+                        </label>
+                    </div>
+                    {% endfor %}
+                    <div class="form-check mb-3">
+                        <label for="totamount" class="form-check-label" style="color: white;">Total Amount</label>
+                        <input type="number" class="form-control" name="totamount" value="{{totalamount}}" readonly>
+                    </div>
+                    <div class="text-end">
+                        <a href="{% url 'showcart' %}" type="button" class="btn btn-danger mt-3 px-5 fw-bold">Back</a>
+                        <button id="rzp-button1" type="submit" class="btn btn-warning mt-3 px-5 fw-bold" disabled>Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block payment-geteway %}
+<script>
+    var options = {
+        "key": "{{razorpay_key}}", // Enter the Key ID generated from the Dashboard
+        "amount": "{{razoramount}}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "GYM Products",
+        "description": "Purchase Product",
+        "order_id": "{{order_id}}", // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response) {
+            console.log("success")
+            var form = document.getElementById("myform");
+            window.location.href = `http://localhost:8000/paymentdone?order_id=${response.razorpay_order_id}&payment_id=${response.razorpay_payment_id}&cust_id=${form.elements["custid"].value}`
+        },
+        "theme": {"color": "#3399cc"}
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+        alert(response.error.description);
+    });
+
+    document.getElementById('rzp-button1').onclick = function (e) {
+        console.log("button click")
+        rzp1.open();
+        e.preventDefault();
+    }
+
+    // Listen for radio button change event
+    var radioButtons = document.querySelectorAll('input[name="custid"]');
+    radioButtons.forEach(function(radioButton) {
+        radioButton.addEventListener('change', function() {
+            var paymentButton = document.getElementById('rzp-button1');
+            paymentButton.disabled = !this.checked;
+        });
+    });
+</script>
+{% endblock payment-geteway %}
+
+
