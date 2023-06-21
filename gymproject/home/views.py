@@ -344,7 +344,7 @@ def show_cart(request):
 
 
 
-@method_decorator(login_required(login_url = 'login'),name='dispatch')
+
 class checkout(View):
     def get(self, request):
         user = request.user

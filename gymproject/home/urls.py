@@ -18,8 +18,8 @@ urlpatterns = [
     # path('class/',views.class_d),
     path('about/',views.about ,name='about'),
     path('contact/',views.contact ,name='contact'),
-    path('gallery/',views.gallery),
     path('sample/',views.sample),
+    path('gallery/',views.gallery,name='gallery'),
 
     path("category/<slug:val>",views.CategoryView.as_view(),name="category"),
     path('categorytitle/<val>',views.CategoryTitle.as_view(),name='categorytitle'),
