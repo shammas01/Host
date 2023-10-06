@@ -8,7 +8,6 @@ from . forms import CustomerRegistration, CustomerProfileForm
 from django.contrib import messages
 from django.contrib.auth import logout,login
 from django.http import HttpResponse, JsonResponse,HttpResponseBadRequest
-
 from django.contrib.auth.models import User
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
