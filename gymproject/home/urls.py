@@ -16,11 +16,10 @@ urlpatterns = [
     path('service/',views.service),
     path('team/',views.team),
     # path('class/',views.class_d),
+    
     path('about/',views.about ,name='about'),
     path('contact/',views.contact ,name='contact'),
-    path('sample/',views.sample),
     path('gallery/',views.gallery,name='gallery'),
-
     path("category/<slug:val>",views.CategoryView.as_view(),name="category"),
     path('categorytitle/<val>',views.CategoryTitle.as_view(),name='categorytitle'),
     path("productdetails/<int:pk>",views.ProductDetails.as_view(),name="productdetails"),
@@ -48,7 +47,7 @@ urlpatterns = [
 
     path('logout/',views.logout_view,name='logout_view'),
 
-    path('sample/',views.sample),
+    
 
 
     # new >>>>>>>>>>>>>>>

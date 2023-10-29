@@ -35,7 +35,7 @@ def index(request):
     if request.user.is_authenticated:
         totalitem = len(Cart.objects.filter(user=request.user))
         wishlistcount = len(Wishlist.objects.filter(user=request.user))
-    return render(request, 'user/index.html',locals())
+    return render(request, 'user/index.html',{'totalitem':totalitem,'wishlistcount':wishlistcount})
 
 
 @login_required(login_url= 'login')
@@ -68,8 +68,8 @@ def gallery(request):
     return render(request, 'user/gallery.html',locals())
 
 
-def sample(request):
-    return render(request, 'user/sample.html')
+# def sample(request):
+#     return render(request, 'user/sample.html')
 
 
 
@@ -354,6 +354,8 @@ class checkout(View):
         if request.user.is_authenticated:
             totalitem = len(Cart.objects.filter(user=request.user))
             wishlistcount = len(Wishlist.objects.filter(user=request.user))
+
+        
         famount = 0
         for p in cart_items:
             value = p.quantity * p.product.discounted_price
